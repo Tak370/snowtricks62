@@ -27,7 +27,7 @@ class Trick
     #[Column(type: Types::STRING)]
     private string $slug;
 
-    #[Column(type: Types::STRING)]
+    #[Column(type: Types::TEXT)]
     private string $description;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
