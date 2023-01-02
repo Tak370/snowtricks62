@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <div class="row mt-4">
+            <div class="col-12 col-lg-4 col-xl-3">
+                <img src="https://picsum.photos/640/480" alt="random image" class="card-img-top">
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 my-4">
+                <h1>{{ trick.name }}</h1>
+                <span class="text-muted small">
+                    Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
+                </span>
+                <p class="m-0 my-2">
+                    {{ trick.description|nl2br }}
+                </p>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
