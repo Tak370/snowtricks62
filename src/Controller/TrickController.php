@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,9 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 final class TrickController extends AbstractController
 {
     #[Route('', name: 'list', methods: ['GET'])]
-    public function list(): Response
+    public function list(TrickRepository $trickRepository): Response
     {
-        return $this->render('trick/list.html.twig');
+        return $this->render('trick/list.html.twig', [
+            'tricks' => $trickRepository->findAll()
+        ]);
     }
 
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]

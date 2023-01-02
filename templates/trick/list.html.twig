@@ -1,0 +1,41 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <div class="row">
+            <div class="col-12 my-4 d-flex justify-content-between align-items-center">
+                <h1>Les tricks</h1>
+            </div>
+
+            {% for trick in tricks %}
+                <div class="col-12 col-lg-4 col-xl-3 mb-4">
+                    <article class="card h-100">
+                        <a href="#">
+                            <img src="https://picsum.photos/640/480" alt="random image" class="card-img-top">
+                        </a>
+                        <div class="card-body flex-grow-1 d-flex flex-column">
+                            <a href="#" class="text-body text-decoration-none">
+                                <h2 class="mb-2">{{ trick.name }}</h2>
+                            </a>
+                            <div class="m-0 mb-4 flex-grow-1">
+                                                            <span class="text-muted small">
+                                Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
+                            </span>
+                                <span class="text-muted small">
+                                Catégorie :
+                                <a href="#" class="text-decoration-none text-dark">
+                                    {{ trick.category.name }}
+                                </a>
+                            </span>
+                            </div>
+                            <a href="#" class="d-block btn btn-dark">
+                                Voir le trick
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+
+        </div>
+    </main>
+{% endblock %}
