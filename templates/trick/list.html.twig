@@ -11,7 +11,7 @@
                 <div class="col-12 col-lg-4 col-xl-3 mb-4">
                     <article class="card h-100">
                         <a href="{{ path('trick_read', {slug: trick.slug}) }}">
-                            <img src="https://picsum.photos/640/480" alt="random image" class="card-img-top">
+                            <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" alt="{{ trick.name }}" class="card-img-top">
                         </a>
                         <div class="card-body flex-grow-1 d-flex flex-column">
                             <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-body text-decoration-none">
