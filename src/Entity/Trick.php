@@ -55,6 +55,10 @@ class Trick
     #[NotNull]
     private Category $category;
 
+    #[ManyToOne(targetEntity: User::class)]
+    #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private User $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +132,16 @@ class Trick
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
     public function getImageFile(): ?UploadedFile
