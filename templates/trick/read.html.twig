@@ -11,9 +11,16 @@
                 <span class="text-muted small">
                     Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
                 </span>
-                <p class="m-0 my-2">
-                    {{ trick.description|nl2br }}
-                </p>
+                <p class="m-0 my-2">{{ trick.description|nl2br }}</p>
+                {% if is_granted('edit', trick) %}
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-outline-dark">Modifier</a>
+                        <form action="{{ path('trick_delete', {id: trick.id}) }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_trick') }}">
+                            <button class="btn btn-outline-dark">Supprimer</button>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </main>

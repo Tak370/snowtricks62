@@ -42,6 +42,7 @@ class Trick
     private string $image;
 
     #[Image(maxSize: '1M', maxRatio: 16/9, minRatio: 1)]
+    #[NotNull(groups: ['create'])]
     private ?UploadedFile $imageFile = null;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
