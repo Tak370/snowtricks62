@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -23,25 +27,32 @@ class Trick
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
+    #[NotBlank]
     private string $name;
 
     #[Column(type: Types::STRING)]
+    #[NotBlank]
     private string $slug;
 
     #[Column(type: Types::TEXT)]
+    #[NotBlank]
     private string $description;
 
     #[Column(type: Types::STRING)]
     private string $image;
 
+    #[Image(maxSize: '1M', maxRatio: 16/9, minRatio: 1)]
+    private ?UploadedFile $imageFile = null;
+
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
-    #[Column(type: 'string', length: 100, nullable: true)]
+    #[Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $featuredText;
 
     #[ManyToOne(targetEntity: Category::class, inversedBy: 'tricks')]
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[NotNull]
     private Category $category;
 
     public function getId(): ?int
@@ -117,6 +128,16 @@ class Trick
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function getImageFile(): ?UploadedFile
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?UploadedFile $imageFile): void
+    {
+        $this->imageFile = $imageFile;
     }
 
 }

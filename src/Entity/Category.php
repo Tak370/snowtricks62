@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
+use Stringable;
 
 #[Entity(repositoryClass: CategoryRepository::class)]
-class Category
+class Category implements Stringable
 {
     #[Id]
     #[GeneratedValue]
@@ -66,4 +67,8 @@ class Category
         return $this->tricks;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

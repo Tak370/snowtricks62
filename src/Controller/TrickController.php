@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Trick;
+use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/tricks', name: 'trick_')]
 final class TrickController extends AbstractController
@@ -22,9 +27,30 @@ final class TrickController extends AbstractController
     }
 
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function create(): Response
+    public function create(Request $request, EntityManagerInterface $entityManager, string $uploadDir): Response
     {
+        $trick = new Trick();
 
+        $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setCreatedAt(new DateTimeImmutable());
+            $trick->setImage(
+                sprintf(
+                    '%s.%s',
+                    Uuid::v4(),
+                    $trick->getImageFile()->getClientOriginalExtension()
+                )
+            );
+            $trick->getImageFile()->move($uploadDir, $trick->getImage());
+            $entityManager->persist($trick);
+            $entityManager->flush();
+            return $this->redirectToRoute('trick_read', ['slug' => $trick->getSlug()]);
+        }
+
+        return $this->render('trick/create.html.twig', [
+            'form' => $form
+        ]);
     }
 
     #[Route('/{slug}/read', name: 'read', methods: ['GET'])]
