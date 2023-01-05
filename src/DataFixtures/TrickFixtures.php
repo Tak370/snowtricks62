@@ -28,6 +28,7 @@ final class TrickFixtures extends Fixture implements DependentFixtureInterface
                 $trick->setDescription($faker->paragraphs(2, true));
                 $trick->setSlug($faker->words(3, true));
                 $trick->setFeaturedText($faker->words(3, true));
+                $trick->setImage('jess-bailey-l3N9Q27zULw-unsplash.jpg');
 
                 $manager->persist($trick);
             }

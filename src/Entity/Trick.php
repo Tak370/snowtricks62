@@ -31,6 +31,9 @@ class Trick
     #[Column(type: Types::TEXT)]
     private string $description;
 
+    #[Column(type: Types::STRING)]
+    private string $image;
+
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $createdAt;
 
@@ -69,6 +72,16 @@ class Trick
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 
     public function setDescription(string $description): void
