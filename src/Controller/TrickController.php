@@ -17,10 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/tricks', name: 'trick_')]
 final class TrickController extends AbstractController
 {
-    #[Route('', name: 'list', methods: ['GET'])]
+    #[Route('/', name: 'home', methods: ['GET'])]
     public function list(TrickRepository $trickRepository): Response
     {
         return $this->render('trick/list.html.twig', [
@@ -28,7 +27,7 @@ final class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
+    #[Route('/create', name: 'trick_create', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function create(Request $request, EntityManagerInterface $entityManager, string $uploadDir): Response
     {
@@ -65,7 +64,7 @@ final class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/read', name: 'read', methods: ['GET'])]
+    #[Route('/{slug}/read', name: 'trick_read', methods: ['GET'])]
     public function read(Trick $trick): Response
     {
         return $this->render('trick/read.html.twig', [
@@ -73,7 +72,7 @@ final class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/update', name: 'update', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/update', name: 'trick_update', methods: ['GET', 'POST'])]
     #[IsGranted('edit', subject: 'trick')]
     public function update(Trick $trick, Request $request, EntityManagerInterface $entityManager, string $uploadDir): Response
     {
@@ -99,12 +98,12 @@ final class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'trick_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('edit', subject: 'trick')]
     public function delete(Trick $trick, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($trick);
         $entityManager->flush();
-        return $this->redirectToRoute('trick_list');
+        return $this->redirectToRoute('home');
     }
 }

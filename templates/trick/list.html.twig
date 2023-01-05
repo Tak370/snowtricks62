@@ -1,44 +1,80 @@
 {%  extends 'base.html.twig' %}
 
+{% block title %}Snowtricks - Bienvenue{% endblock %}
+
 {% block body %}
-    <main class="container">
-        <div class="row">
+
+    <!-- Masthead-->
+
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Snowtricks</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">You know nothing John Snow...</h2>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a id="scroll-down" href="#tricks"><i class="fa-solid fa-arrow-down fa-4x"></i></a>
+        </div>
+    </header>
+
+    <!-- Tricks-->
+
+    <section class="tricks-section bg-light" id="tricks">
+
+        <div class="container text-center pt-4 mb-4">
             <div class="col-12 my-4 d-flex justify-content-between align-items-center">
-                <h1>Les tricks</h1>
+                <h1>Les Tricks</h1>
                 {% if is_granted('ROLE_USER') %}
                     <a href="{{ path('trick_create') }}" class="btn btn-dark">Ajouter un trick</a>
                 {% endif %}
             </div>
+        </div>
 
-            {% for trick in tricks %}
-                <div class="col-12 col-lg-4 col-xl-3 mb-4">
-                    <article class="card h-100">
-                        <a href="{{ path('trick_read', {slug: trick.slug}) }}">
-                            <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" alt="{{ trick.name }}" class="card-img-top">
-                        </a>
-                        <div class="card-body flex-grow-1 d-flex flex-column">
-                            <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-body text-decoration-none">
-                                <h2 class="mb-2">{{ trick.name }}</h2>
+        <div class="container pt-4 px-1 px-lg-2">
+
+            <div class="row align-items-stretch">
+                {% for trick in tricks %}
+                    <div class="col-12 col-md-4 col-xl-2_4 mb-4">
+                        <article class="card card-trick h-100">
+
+                            <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-body">
+                                <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" alt="{{ trick.name }}" class="card-img-top">
                             </a>
-                            <div class="m-0 mb-4 flex-grow-1">
-                                <span class="text-muted small">
-                                    Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
-                                </span>
-                                <span class="text-muted small">
-                                    Catégorie :
-                                    <a href="#" class="text-decoration-none text-dark">
-                                        {{ trick.category.name }}
-                                    </a>
-                            </span>
+
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-black col-8">
+                                            <h5>{{ trick.name }}</h5>
+                                        </a>
+                                        <span class="col-2"><i class="fas fa-pen text-success"></i></span>
+                                        <span class="col-2"><i class="fas fa-trash text-danger"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="d-block btn btn-dark">
-                                Voir le trick
-                            </a>
-                        </div>
-                    </article>
-                </div>
-            {% endfor %}
+
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
 
         </div>
-    </main>
+
+        <div class="container pb-4 text-center">
+            <button class="btn btn-success" id="loadMore">Voir plus</button>
+            <a id="scroll-up" href="#tricks"><i class="fa-solid fa-arrow-up fa-4x"></i></a>
+        </div>
+
+    </section>
+
 {% endblock %}
+
+
+
+
+
+
+

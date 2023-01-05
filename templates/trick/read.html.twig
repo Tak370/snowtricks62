@@ -1,28 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'prime.html.twig' %}
 
 {% block body %}
-    <main class="container">
-        <div class="row mt-4">
-            <div class="col-12 col-lg-4 col-xl-3">
-                <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" alt="{{ trick.name }}" class="card-img-top">
+    <section class="read-section pb-4 bg-light">
+        <div class="trick container px-1 px-lg-2">
+
+            <div class="row mt-4">
+                <div class="col-12 col-lg-4 col-xl-3">
+                    <img src="{{ asset('uploads/jess-bailey-l3N9Q27zULw-unsplash.jpg') }}" class="mw-100" alt="{{ trick.name }}">
+                </div>
+                <div class="col-12 col-lg-8 col-xl-9">
+                    <h1 class="my-4">{{ trick.name }}</h1>
+                    <span class="text-muted small">Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}</span>
+                    <p class="m-0 mt-2 flex-grow-1">{{ trick.description|nl2br }}</p>
+                    {% if is_granted('edit', trick) %}
+                        <div class="d-flex justify-content-end gap-3">
+                            <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-outline-dark">Modifier</a>
+                            <form action="{{ path('trick_delete', {id: trick.id}) }}" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_trick') }}">
+                                <button class="btn btn-outline-dark">Supprimer</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-            <div class="col-12 col-lg-8 col-xl-9 my-4">
-                <h1>{{ trick.name }}</h1>
-                <span class="text-muted small">
-                    Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
-                </span>
-                <p class="m-0 my-2">{{ trick.description|nl2br }}</p>
-                {% if is_granted('edit', trick) %}
-                    <div class="d-flex justify-content-end gap-3">
-                        <a href="{{ path('trick_update', {slug: trick.slug}) }}" class="btn btn-outline-dark">Modifier</a>
-                        <form action="{{ path('trick_delete', {id: trick.id}) }}" method="post">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token('delete_trick') }}">
-                            <button class="btn btn-outline-dark">Supprimer</button>
-                        </form>
-                    </div>
-                {% endif %}
-            </div>
+
         </div>
-    </main>
+    </section>
 {% endblock %}
 
