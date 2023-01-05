@@ -10,25 +10,25 @@
             {% for trick in tricks %}
                 <div class="col-12 col-lg-4 col-xl-3 mb-4">
                     <article class="card h-100">
-                        <a href="#">
+                        <a href="{{ path('trick_read', {slug: trick.slug}) }}">
                             <img src="https://picsum.photos/640/480" alt="random image" class="card-img-top">
                         </a>
                         <div class="card-body flex-grow-1 d-flex flex-column">
-                            <a href="#" class="text-body text-decoration-none">
+                            <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="text-body text-decoration-none">
                                 <h2 class="mb-2">{{ trick.name }}</h2>
                             </a>
                             <div class="m-0 mb-4 flex-grow-1">
-                                                            <span class="text-muted small">
-                                Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
-                            </span>
                                 <span class="text-muted small">
-                                Catégorie :
-                                <a href="#" class="text-decoration-none text-dark">
-                                    {{ trick.category.name }}
-                                </a>
+                                    Ajouté le {{ trick.createdAt|date('d/m/Y à H:i') }}
+                                </span>
+                                <span class="text-muted small">
+                                    Catégorie :
+                                    <a href="#" class="text-decoration-none text-dark">
+                                        {{ trick.category.name }}
+                                    </a>
                             </span>
                             </div>
-                            <a href="#" class="d-block btn btn-dark">
+                            <a href="{{ path('trick_read', {slug: trick.slug}) }}" class="d-block btn btn-dark">
                                 Voir le trick
                             </a>
                         </div>

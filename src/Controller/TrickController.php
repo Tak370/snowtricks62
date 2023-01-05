@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +28,11 @@ final class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/read', name: 'read', methods: ['GET'])]
-    public function read(): Response
+    public function read(Trick $trick): Response
     {
-
+        return $this->render('trick/read.html.twig', [
+            'trick' => $trick
+        ]);
     }
 
     #[Route('/{slug}/update', name: 'update', methods: ['GET', 'POST'])]
