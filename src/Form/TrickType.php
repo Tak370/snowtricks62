@@ -40,7 +40,8 @@ final class TrickType extends AbstractType
                 'empty_data' => ''
             ])
             ->add('imageFile', FileType::class, [
-                'label' => 'Image de couverture'
+                'label' => 'Image de couverture',
+                'required' => in_array('create', $options['validation_groups'] ?? [])
             ]);
     }
 
