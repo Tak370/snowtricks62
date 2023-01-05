@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Trick;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,18 +20,24 @@ final class TrickFixtures extends Fixture implements DependentFixtureInterface
         /** @var array<array-key, Category> $categories */
         $categories = $manager->getRepository(Category::class)->findAll();
 
-        foreach ($categories as $category) {
-            for ($i = 1; $i <= 5; ++$i) {
-                $trick = new Trick();
-                $trick->setCategory($category);
-                $trick->setCreatedAt(new DateTimeImmutable());
-                $trick->setName($faker->words(3, true));
-                $trick->setDescription($faker->paragraphs(2, true));
-                $trick->setSlug($faker->words(3, true));
-                $trick->setFeaturedText($faker->words(3, true));
-                $trick->setImage('jess-bailey-l3N9Q27zULw-unsplash.jpg');
+        /** @var array<array-key, User> $users */
+        $users = $manager->getRepository(User::class)->findAll();
 
-                $manager->persist($trick);
+        foreach ($users as $user) {
+            foreach ($categories as $category) {
+                for ($i = 1; $i <= 5; ++$i) {
+                    $trick = new Trick();
+                    $trick->setCategory($category);
+                    $trick->setUser($user);
+                    $trick->setCreatedAt(new DateTimeImmutable());
+                    $trick->setName($faker->words(3, true));
+                    $trick->setDescription($faker->paragraphs(2, true));
+                    $trick->setSlug($faker->words(3, true));
+                    $trick->setFeaturedText($faker->words(3, true));
+                    $trick->setImage('jess-bailey-l3N9Q27zULw-unsplash.jpg');
+
+                    $manager->persist($trick);
+                }
             }
         }
 
@@ -39,6 +46,9 @@ final class TrickFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies(): array
     {
-        return [CategoryFixtures::class];
+        return [
+            CategoryFixtures::class,
+            UserFixtures::class
+        ];
     }
 }
